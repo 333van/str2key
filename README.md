@@ -9,6 +9,7 @@ gcc str2key.c -I./ -o str2key
 
 ## usage
 ```PowerShell
+# PowerShell
 ${ String to be converted into scan codes } = "Hello World!"
 ${ Sleep Time in Seconds before calling SendInput() from Windows OS } = 3
 
