@@ -1,4 +1,5 @@
 // http://www.seasip.info/VintagePC/ibm_1390876.html
+
 #define NO_SHIFT 0
 #define ADD_SHIFT 1
 

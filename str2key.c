@@ -1,19 +1,8 @@
-#include <windows.h> // a wrap for many C header files
-#include <stdio.h>   // Standard Input & Output, in Computer Science (CS)
-                     // StdIn (Standard Input) means input from keyboard
-                     // StdOut (Standard Output) means output to screen
-                     // via shell, or commandline interface
-
-// "int" specifies the return value type of the function named "main".
-// "main" is the default function name for a C program's entry point,
-// which means when this program is compiled into binary, or machine code,
-// the instructions (code) from top to down inside of this "main" function
-// will be executed first
-
+#include <windows.h>
+#include <stdio.h>
 #include <set2defs.h>
 
 #define MAX_INPUT_SIZE 8192
-#define NO_SHIFT 0
 
 INPUT inputs[MAX_INPUT_SIZE] = {};
 int validInputObjectsCount = 0;
@@ -27,7 +16,6 @@ int getStringSize(char *stringPointer){
   return stringSize;
 }
 
-// void setInputObject(int scanCode, int vkCode, int isShift){
 void setInputObject(int scanCode, int isShift){
   if(isShift == ADD_SHIFT){
     inputs[validInputObjectsCount].type         = INPUT_KEYBOARD;
@@ -52,7 +40,6 @@ void setInputObject(int scanCode, int isShift){
     inputs[validInputObjectsCount+1].ki.dwFlags = KEYEVENTF_KEYUP;
     validInputObjectsCount+=2;
   }
-
 }
 
 int main( int argc, char *argv[] ){
