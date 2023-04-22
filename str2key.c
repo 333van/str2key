@@ -380,14 +380,15 @@ int main( int argc, char *argv[] ){
       case '?':
         setInputObject(SCANCODE_QuestionMark, ADD_SHIFT);
         break;
+      // US Keyboard OEM Key
+      // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
       case '~':
-        // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
         setInputObject(VK_OEM_3, ADD_SHIFT);
         break;
       case '`':
-        // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
         setInputObject(VK_OEM_3, NO_SHIFT);
         break;
+      // Special Keys
       case '\n':
         break;
         setInputObject(SCANCODE_Enter, NO_SHIFT);
