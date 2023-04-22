@@ -23,7 +23,7 @@ str2key.exe @"
 echo "Hello"
 echo "World"
 
-@" 3
+"@ 3
 ```
 
 ## license
