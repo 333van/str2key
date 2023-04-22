@@ -26,5 +26,21 @@ echo "World"
 "@ 3
 ```
 
+## Special Escape in PowerShell
+- for double quotation mark, say:
+```PowerShell
+str2key '""Hello World!""' 0 # "Hello World"
+str2key @'
+"""Hello World!"""
+'@ 0 # "Hello World"
+```
+- for backtick
+```PowerShell
+str2key "``" 0
+str2key @"
+``
+"@ 0
+```
+
 ## license
 MIT

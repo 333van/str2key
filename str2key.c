@@ -22,20 +22,50 @@ void setInputObject(int scanCode, int isShift){
     inputs[validInputObjectsCount].type         = INPUT_KEYBOARD;
     inputs[validInputObjectsCount].ki.wScan     = SCANCODE_LeftShift;
     inputs[validInputObjectsCount].ki.dwFlags   = KEYEVENTF_SCANCODE;
+    // For US Keyboard only, as ` and ~ are dead key
+    // https://en.wikipedia.org/wiki/Dead_key
+    // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+    if(scanCode == VK_OEM_3){
+      inputs[validInputObjectsCount+1].ki.wScan = 0;
+      inputs[validInputObjectsCount+1].ki.wVk = VK_OEM_3;
+      inputs[validInputObjectsCount+1].ki.time = 0;
+      inputs[validInputObjectsCount+1].ki.dwExtraInfo = 0;
+      inputs[validInputObjectsCount+1].ki.dwFlags = 0;
+
+      inputs[validInputObjectsCount+2].ki.wScan = 0;
+      inputs[validInputObjectsCount+2].ki.wVk = VK_OEM_3;
+      inputs[validInputObjectsCount+2].ki.time = 0;
+      inputs[validInputObjectsCount+2].ki.dwExtraInfo = 0;
+      inputs[validInputObjectsCount+2].ki.dwFlags = KEYEVENTF_KEYUP;
+    }else{
+      inputs[validInputObjectsCount+1].ki.wScan   = scanCode;
+      inputs[validInputObjectsCount+1].ki.dwFlags = KEYEVENTF_SCANCODE;
+      inputs[validInputObjectsCount+2].ki.wScan   = scanCode;
+      inputs[validInputObjectsCount+2].ki.dwFlags = KEYEVENTF_KEYUP;
+    }
     inputs[validInputObjectsCount+1].type       = INPUT_KEYBOARD;
-    inputs[validInputObjectsCount+1].ki.wScan   = scanCode;
-    inputs[validInputObjectsCount+1].ki.dwFlags = KEYEVENTF_SCANCODE;
+    // inputs[validInputObjectsCount+1].ki.wScan   = scanCode;
+    // inputs[validInputObjectsCount+1].ki.dwFlags = KEYEVENTF_SCANCODE;
     inputs[validInputObjectsCount+2].type       = INPUT_KEYBOARD;
-    inputs[validInputObjectsCount+2].ki.wScan   = scanCode;
-    inputs[validInputObjectsCount+2].ki.dwFlags = KEYEVENTF_KEYUP;
+    // inputs[validInputObjectsCount+2].ki.wScan   = scanCode;
+    // inputs[validInputObjectsCount+2].ki.dwFlags = KEYEVENTF_KEYUP;
     inputs[validInputObjectsCount+3].type       = INPUT_KEYBOARD;
     inputs[validInputObjectsCount+3].ki.wVk     = VK_SHIFT;
     inputs[validInputObjectsCount+3].ki.dwFlags = KEYEVENTF_KEYUP;
     validInputObjectsCount+=4;
   }else if(isShift == NO_SHIFT){
     inputs[validInputObjectsCount].type         = INPUT_KEYBOARD;
+    if(scanCode == VK_OEM_3){
+      inputs[validInputObjectsCount].ki.wScan = 0;
+      inputs[validInputObjectsCount].ki.wVk = VK_OEM_3;
+      inputs[validInputObjectsCount].ki.time = 0;
+      inputs[validInputObjectsCount].ki.dwExtraInfo = 0;
+      inputs[validInputObjectsCount].ki.dwFlags = 0;
+    }else{
+      inputs[validInputObjectsCount].ki.dwFlags   = KEYEVENTF_SCANCODE;
+    }
     inputs[validInputObjectsCount].ki.wScan     = scanCode;
-    inputs[validInputObjectsCount].ki.dwFlags   = KEYEVENTF_SCANCODE;
+    // inputs[validInputObjectsCount].ki.dwFlags   = KEYEVENTF_SCANCODE;
     inputs[validInputObjectsCount+1].type       = INPUT_KEYBOARD;
     inputs[validInputObjectsCount+1].ki.wScan   = scanCode;
     inputs[validInputObjectsCount+1].ki.dwFlags = KEYEVENTF_KEYUP;
@@ -59,7 +89,7 @@ int main( int argc, char *argv[] ){
   ZeroMemory(inputs, sizeof(inputs));
 
   for(int i=0; i<stringSize; i++){
-    // printf("%c\n", argv[1][i]);
+    printf("%c\n", argv[1][i]);
     switch(argv[1][i]){
       // 1st Line
       case '1':
@@ -315,7 +345,7 @@ int main( int argc, char *argv[] ){
       case ':':
         setInputObject(SCANCODE_Colon, ADD_SHIFT);
         break;
-      case '"':
+      case '\"':
         setInputObject(SCANCODE_DoubleQuote, ADD_SHIFT);
         break;
       // 4th Line
@@ -348,6 +378,14 @@ int main( int argc, char *argv[] ){
         break;
       case '?':
         setInputObject(SCANCODE_QuestionMark, ADD_SHIFT);
+        break;
+      case '~':
+        // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        setInputObject(VK_OEM_3, ADD_SHIFT);
+        break;
+      case '`':
+        // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        setInputObject(VK_OEM_3, NO_SHIFT);
         break;
       case '\n':
         break;
