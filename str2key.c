@@ -3,6 +3,7 @@
 #include <set2defs.h>
 
 #define MAX_INPUT_SIZE 8192
+#define DEFAULT_SLEEP_TIME_IN_SECONDS 3
 
 INPUT inputs[MAX_INPUT_SIZE] = {};
 int validInputObjectsCount = 0;
@@ -43,7 +44,7 @@ void setInputObject(int scanCode, int isShift){
 }
 
 int main( int argc, char *argv[] ){
-  int sleepSeconds = 0;
+  int sleepSeconds = DEFAULT_SLEEP_TIME_IN_SECONDS;
 
   if(argc == 3) {
     sleepSeconds = atoi(argv[2]);
@@ -348,6 +349,9 @@ int main( int argc, char *argv[] ){
       case '?':
         setInputObject(SCANCODE_QuestionMark, ADD_SHIFT);
         break;
+      case '\n':
+        break;
+        setInputObject(SCANCODE_Enter, NO_SHIFT);
     }
   }
 

@@ -16,6 +16,14 @@ ${ Sleep Time in Seconds before calling SendInput() from Windows OS } = 3
 str2key.exe `
 ${ String to be converted into scan codes } `
 ${ Sleep Time in Seconds before calling SendInput() from Windows OS }
+
+# Newline will be treated as Enter
+# The second param is the default sleep time, which is 3 seconds
+str2key.exe @"
+echo "Hello"
+echo "World"
+
+@" 3
 ```
 
 ## license
