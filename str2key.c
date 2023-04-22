@@ -88,8 +88,9 @@ int main( int argc, char *argv[] ){
   int isShift[stringSize];
   ZeroMemory(inputs, sizeof(inputs));
 
+  printf("Sending: ");
   for(int i=0; i<stringSize; i++){
-    printf("%c\n", argv[1][i]);
+    printf("%c", argv[1][i]);
     switch(argv[1][i]){
       // 1st Line
       case '1':
@@ -404,6 +405,8 @@ int main( int argc, char *argv[] ){
   {
     printf("SendInput failed: 0x%x\n", HRESULT_FROM_WIN32(GetLastError()));
     exit(1);
+  }else{
+    printf("\nSent");
   }
   return 0;
 }
