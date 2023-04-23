@@ -27,13 +27,13 @@ void setInputObject(int scanCode, int isShift){
     // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
     if(scanCode == VK_OEM_3){
       inputs[validInputObjectsCount+1].ki.wScan = 0;
-      inputs[validInputObjectsCount+1].ki.wVk = VK_OEM_3;
+      inputs[validInputObjectsCount+1].ki.wVk = scanCode; // not really a "scanCode"
       inputs[validInputObjectsCount+1].ki.time = 0;
       inputs[validInputObjectsCount+1].ki.dwExtraInfo = 0;
       inputs[validInputObjectsCount+1].ki.dwFlags = 0;
 
       inputs[validInputObjectsCount+2].ki.wScan = 0;
-      inputs[validInputObjectsCount+2].ki.wVk = VK_OEM_3;
+      inputs[validInputObjectsCount+2].ki.wVk = scanCode; // not really a "scanCode"
       inputs[validInputObjectsCount+2].ki.time = 0;
       inputs[validInputObjectsCount+2].ki.dwExtraInfo = 0;
       inputs[validInputObjectsCount+2].ki.dwFlags = KEYEVENTF_KEYUP;
@@ -75,10 +75,15 @@ void setInputObject(int scanCode, int isShift){
 
 int main( int argc, char *argv[] ){
   int sleepSeconds = DEFAULT_SLEEP_TIME_IN_SECONDS;
+  int isEnter = 0;
 
-  if(argc == 3) {
+  if(argc >= 3) {
     sleepSeconds = atoi(argv[2]);
-  }else if(argc != 2){
+    if(argc >= 4){
+      isEnter = 1;
+    }
+  }
+  else if(argc != 2){
     return 1;
   }
 
@@ -88,7 +93,7 @@ int main( int argc, char *argv[] ){
   int isShift[stringSize];
   ZeroMemory(inputs, sizeof(inputs));
 
-  printf("Sending: ");
+  printf("Sending:\n");
   for(int i=0; i<stringSize; i++){
     printf("%c", argv[1][i]);
     switch(argv[1][i]){
@@ -390,9 +395,14 @@ int main( int argc, char *argv[] ){
         break;
       // Special Keys
       case '\n':
-        break;
         setInputObject(SCANCODE_Enter, NO_SHIFT);
+        break;
     }
+  }
+
+  // tailing enter
+  if(isEnter == 1){
+    setInputObject(SCANCODE_Enter, NO_SHIFT);
   }
 
   if(sleepSeconds != 0){
